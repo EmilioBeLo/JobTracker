@@ -1,0 +1,12 @@
+<div class="stats-row">
+  @for (stat of statsCards; track stat.status) {
+    <div 
+      class="stat-card"
+      [class]="stat.colorClass"
+      [class.active]="activeFilter === stat.status"
+      (click)="onCardClick(stat.status)">
+      <h3>{{ stat.label }}</h3>
+      <p class="stat-number">{{ stat.count }}</p>
+    </div>
+  }
+</div>

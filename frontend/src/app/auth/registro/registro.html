@@ -1,0 +1,114 @@
+<div class="auth-container">
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100 py-5">
+            <div class="col-md-6 col-lg-5">
+                <!-- Card de Registro -->
+                <div class="card auth-card shadow-lg border-0">
+                    <div class="card-body p-5">
+                        <!-- Logo / Icono -->
+                        <div class="text-center mb-4">
+                            <div class="auth-icon-wrapper mb-3">
+                                <i class="bi bi-person-plus-fill auth-icon"></i>
+                            </div>
+                            <h2 class="fw-bold text-primary mb-1">Crear Cuenta</h2>
+                            <p class="text-muted">Únete a JobTracker y organiza tu búsqueda</p>
+                        </div>
+
+                        <!-- Formulario de Registro -->
+                        <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+                            <!-- Username -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="username" placeholder="Nombre de usuario"
+                                    [(ngModel)]="user.username" name="username" required>
+                                <label for="username">
+                                    <i class="bi bi-person me-2"></i>Nombre de usuario
+                                </label>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com"
+                                    [(ngModel)]="user.email" name="email" required>
+                                <label for="email">
+                                    <i class="bi bi-envelope me-2"></i>Correo electrónico
+                                </label>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="password" placeholder="Contraseña"
+                                    [(ngModel)]="user.password" name="password" required>
+                                <label for="password">
+                                    <i class="bi bi-lock me-2"></i>Contraseña
+                                </label>
+                            </div>
+
+                            <!-- Confirmar Password (Visual only for now, or add validation logic later) -->
+                            <!-- Removing confirm password to keep it simple for first iteration or keeping it visual -->
+
+
+                            <!-- Password strength indicator -->
+                            <div class="password-strength mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <small class="text-muted">Fortaleza de contraseña</small>
+                                    <small class="strength-text text-success">Fuerte</small>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 80%"></div>
+                                </div>
+                            </div>
+
+                            <!-- Términos y condiciones -->
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="terms">
+                                <label class="form-check-label small" for="terms">
+                                    Acepto los <a href="#" class="text-decoration-none">Términos de Servicio</a>
+                                    y la <a href="#" class="text-decoration-none">Política de Privacidad</a>
+                                </label>
+                            </div>
+
+                            <!-- Botón Registro -->
+                            <button type="submit" class="btn btn-primary w-100 py-3 mb-3 fw-semibold">
+                                <i class="bi bi-person-check me-2"></i>Crear mi cuenta
+                            </button>
+
+                            <!-- Divider -->
+                            <div class="divider d-flex align-items-center my-4">
+                                <span class="divider-line flex-grow-1"></span>
+                                <span class="px-3 text-muted small">o regístrate con</span>
+                                <span class="divider-line flex-grow-1"></span>
+                            </div>
+
+                            <!-- Social Registration Buttons -->
+                            <div class="d-flex gap-3 mb-4">
+                                <button type="button" class="btn btn-outline-secondary flex-grow-1 py-2">
+                                    <i class="bi bi-google me-2"></i>Google
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary flex-grow-1 py-2">
+                                    <i class="bi bi-linkedin me-2"></i>LinkedIn
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Login Link -->
+                        <div class="text-center">
+                            <p class="mb-0 text-muted">
+                                ¿Ya tienes cuenta?
+                                <a href="/login" class="text-primary fw-semibold text-decoration-none">
+                                    Inicia sesión
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="text-center mt-4">
+                    <small class="text-white-50">
+                        © 2026 JobTracker. Todos los derechos reservados.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,552 @@
+<style>.dashboard-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.jobs-table {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.status-applied { 
+  background: #3498db; 
+  color: white; 
+  padding: 0.5rem 1rem; 
+  border-radius: 20px; 
+}
+
+.status-interviewing { 
+  background: #f39c12; 
+  color: white; 
+  padding: 0.5rem 1rem; 
+  border-radius: 20px; 
+}
+
+.status-offer { 
+  background: #27ae60; 
+  color: white; 
+  padding: 0.5rem 1rem; 
+  border-radius: 20px; 
+}
+
+.status-rejected { 
+  background: #e74c3c; 
+  color: white; 
+  padding: 0.5rem 1rem; 
+  border-radius: 20px; 
+}
+
+.no-jobs {
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+}
+/* Botón flotante */
+.btn-floating {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s;
+  z-index: 100;
+}
+
+.btn-floating:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.btn-floating.active {
+  background: #e74c3c;
+}
+
+/* Overlay oscuro */
+.add-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+}
+
+/* Contenedor del formulario */
+.add-form-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+  z-index: 300;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.add-form-container h3 {
+  margin-top: 0;
+  color: #667eea;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.btn-cancel,
+.btn-submit {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-cancel {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.btn-cancel:hover {
+  background: #d0d0d0;
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Estilos para el estado editable */
+.status-badge-clickable {
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.status-badge-clickable:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.edit-icon {
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.status-badge-clickable:hover .edit-icon {
+  opacity: 1;
+}
+
+.status-select {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 2px solid #667eea;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: white;
+  outline: none;
+}
+
+.status-select:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* Tarjetas clickeables */
+
+
+/* Controles de ordenamiento */
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.sort-controls label {
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.btn-sort {
+  padding: 0.5rem 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  color: #555;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-sort:hover {
+  border-color: #667eea;
+  color: #667eea;
+  transform: translateY(-2px);
+}
+
+.btn-sort.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: #667eea;
+  font-weight: 600;
+}
+
+.btn-sort span {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.status-select-open {
+  border: 2px solid #667eea;
+  border-radius: 12px;
+  padding: 0.25rem;
+  cursor: pointer;
+  background: white;
+  outline: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.status-select-open:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.status-select-open option {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 0.15rem 0;
+}
+
+.status-select-open option:hover {
+  background: #f0f0f0;
+}
+
+/* Barra de búsqueda */
+.search-bar {
+  margin-bottom: 1.5rem;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 500px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  color: #999;
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 3rem 0.75rem 3rem;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  color: #999;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.clear-btn:hover {
+  color: #e74c3c;
+}
+</style>
+
+<div class="dashboard-container">
+
+  <app-navbar [username]="user?.username" (logoutEvent)="logout()"></app-navbar>
+
+    <div class="container">
+    <!-- Tarjetas de estadísticas -->
+    <app-job-stats-cards 
+      [jobs]="jobs"
+      [activeFilter]="statusFilter"
+      (filterChange)="filterByStatus($event)">
+    </app-job-stats-cards>
+
+    <!-- Tabla de ofertas -->
+    <div class="jobs-table">
+      <h3>Mis Ofertas de Trabajo</h3>
+
+      <!-- ← AÑADE ESTA SECCIÓN DE BÚSQUEDA -->
+  <div class="search-bar">
+    <div class="search-input-wrapper">
+      <i class="bi bi-search search-icon"></i>
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm"
+        placeholder="Buscar por empresa o puesto..."
+        class="search-input"
+        name="search">
+      @if (searchTerm) {
+        <button (click)="clearSearch()" class="clear-btn" title="Limpiar búsqueda">
+          <i class="bi bi-x-circle-fill"></i>
+        </button>
+      }
+    </div>
+  </div>
+
+      <div class="sort-controls">
+    <label>Ordenar por:</label>
+    
+    <button (click)="changeSorting('company')" 
+            [class.active]="sortBy === 'company'"
+            class="btn-sort">
+      Empresa
+      @if (sortBy === 'company') {
+        <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+      }
+    </button>
+    
+    <button (click)="changeSorting('position')" 
+            [class.active]="sortBy === 'position'"
+            class="btn-sort">
+      Puesto
+      @if (sortBy === 'position') {
+        <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+      }
+    </button>
+    
+    <button (click)="changeSorting('date')" 
+            [class.active]="sortBy === 'date'"
+            class="btn-sort">
+      Fecha
+      @if (sortBy === 'date') {
+        <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+      }
+    </button>
+  </div>
+      
+      @if ((jobs | jobFilter:statusFilter:searchTerm).length === 0) {
+  <div class="no-jobs">
+    <p>No se encontraron ofertas que coincidan con los filtros.</p>
+  </div>
+}
+
+      @if (jobs.length > 0) {
+        <table>
+          <thead>
+            <tr>
+              <th>Empresa</th>
+              <th>Puesto</th>
+              <th>Estado</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (job of jobs | jobFilter:statusFilter:searchTerm | jobSort:sortBy:sortDirection; track job.id) {
+              <tr>
+                <td>{{ job.company }}</td>
+                <td>{{ job.position }}</td>
+                <td>
+  @if (editingJobId === job.id) {
+    <!-- Modo edición: Select desplegable -->
+    <select [(ngModel)]="job.status" 
+        (change)="updateJobStatus(job, job.status)"
+        (blur)="cancelEdit()"
+        [name]="'status-' + job.id"
+        class="status-select-open"
+        size="4"
+        autofocus>
+  <option value="Applied">Applied</option>
+  <option value="Interviewing">Interviewing</option>
+  <option value="Offer">Offer</option>
+  <option value="Rejected">Rejected</option>
+</select>
+  } @else {
+    <!-- Modo normal: Badge clickeable -->
+    <span [class]="getStatusClass(job.status)" 
+          (click)="startEditingStatus(job.id!)"
+          class="status-badge-clickable">
+      {{ job.status }}
+      <i class="edit-icon">✏️</i>
+    </span>
+  }
+</td>
+                <td>{{ job.applied_date }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  </div>
+
+  <!-- Botón flotante para añadir -->
+  <button class="btn-floating" (click)="toggleAddForm()" 
+          [class.active]="showAddForm">
+    @if (!showAddForm) {
+      <i>+</i>
+    }
+    @if (showAddForm) {
+      <i>×</i>
+    }
+  </button> 
+
+  <!-- Formulario para añadir oferta -->
+  @if (showAddForm) {
+    <div class="add-form-overlay" (click)="toggleAddForm()"></div>
+    
+    <div class="add-form-container">
+      <h3>Añadir Nueva Oferta</h3>
+      
+      <form (ngSubmit)="addJob()">
+        <div class="form-group">
+          <label>Empresa *</label>
+          <input type="text" [(ngModel)]="newJob.company" name="company" 
+                 placeholder="Ej: Google" required>
+        </div>
+
+        <div class="form-group">
+          <label>Puesto *</label>
+          <input type="text" [(ngModel)]="newJob.position" name="position" 
+                 placeholder="Ej: Frontend Developer" required>
+        </div>
+
+        <div class="form-group">
+          <label>Estado</label>
+          <select [(ngModel)]="newJob.status" name="status">
+            <option value="Applied">Applied</option>
+            <option value="Interviewing">Interviewing</option>
+            <option value="Offer">Offer</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Fecha de Aplicación</label>
+          <input type="date" [(ngModel)]="newJob.applied_date" name="applied_date">
+        </div>
+
+        <div class="form-group">
+          <label>Notas</label>
+          <textarea [(ngModel)]="newJob.notes" name="notes" rows="3"
+                    placeholder="Notas adicionales..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="toggleAddForm()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn-submit">
+            Añadir Oferta
+          </button>
+        </div>
+      </form>
+    </div>
+  }
+
+</div>
