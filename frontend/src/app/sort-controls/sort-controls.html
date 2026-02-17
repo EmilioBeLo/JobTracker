@@ -1,0 +1,33 @@
+<div class="sort-controls">
+  <label>Ordenar por:</label>
+  
+  <button 
+    (click)="changeSorting('company')" 
+    [class.active]="sortBy === 'company'"
+    class="btn-sort">
+    Empresa
+    @if (sortBy === 'company') {
+      <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+    }
+  </button>
+  
+  <button 
+    (click)="changeSorting('position')" 
+    [class.active]="sortBy === 'position'"
+    class="btn-sort">
+    Puesto
+    @if (sortBy === 'position') {
+      <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+    }
+  </button>
+  
+  <button 
+    (click)="changeSorting('date')" 
+    [class.active]="sortBy === 'date'"
+    class="btn-sort">
+    Fecha
+    @if (sortBy === 'date') {
+      <span>{{ sortDirection === 'asc' ? '↑' : '↓' }}</span>
+    }
+  </button>
+</div>

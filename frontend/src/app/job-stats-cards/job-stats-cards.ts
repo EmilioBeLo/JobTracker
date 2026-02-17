@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class JobStatsCards {
   @Input() jobs: Job[] = [];
-  @Input() activeFilter: string = 'All';
+  activeFilter: string = 'All';
   @Output() filterChange = new EventEmitter<string>();
 
   get statsCards(){
@@ -33,6 +33,7 @@ export class JobStatsCards {
   }
 
   onCardClick(status: string){
+    this.activeFilter = status
     this.filterChange.emit(status)
   }
 

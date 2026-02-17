@@ -22,10 +22,13 @@ export class LoginComponent {
 
     onSubmit() {
         this.authService.login(this.credentials).subscribe({
-            next: (res) => {
-                // Save user to localStorage
-                localStorage.setItem('user', JSON.stringify(res.user));
-                this.router.navigate(['/dashboard']); 
+            next: (response) => {
+                if(response.success){
+                    this.authService.saveUser(response.user); 
+                    this.router.navigate(['/dashboard'])
+                } else {
+                    this.errorMessage = response.message || 'Error en el login'
+                }
             },
             error: (err) => {
                 this.errorMessage = err.error.error || 'Error al iniciar sesión';

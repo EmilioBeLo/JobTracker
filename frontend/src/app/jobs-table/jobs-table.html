@@ -1,0 +1,66 @@
+<div class="jobs-table">
+  <h3>Mis Ofertas de Trabajo</h3>
+
+  <!-- Búsqueda -->
+  <app-search-bar (search)="onSearchChange($event)"></app-search-bar>
+
+  <!-- Controles de ordenamiento -->
+  <app-sort-controls (sortChange)="onSortChange($event)"></app-sort-controls>
+  
+  <!-- Mensaje cuando no hay resultados -->
+  @if ((jobs | jobFilter:statusFilter:currentSearchTerm).length === 0) {
+    <div class="no-jobs">
+      <p>No se encontraron ofertas que coincidan con los filtros.</p>
+    </div>
+  }
+
+  <!-- Tabla de trabajos -->
+  @if (jobs.length > 0) {
+    <table>
+      <thead>
+        <tr>
+          <th>Empresa</th>
+          <th>Puesto</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (job of jobs | jobFilter:statusFilter:currentSearchTerm | jobSort:currentSortBy:currentSortDirection; track job.id) {
+          <tr>
+            <td>{{ job.company }}</td>
+            <td>{{ job.position }}</td>
+            <td>
+              @if (editingJobId === job.id) {
+                <!-- Modo edición: Select desplegable -->
+                <select 
+                  [(ngModel)]="job.status" 
+                  (change)="updateJobStatus(job, job.status)"
+                  (blur)="cancelEdit()"
+                  [name]="'status-' + job.id"
+                  class="status-select-open"
+                  size="4"
+                  autofocus>
+                  <option value="Applied">Applied</option>
+                  <option value="Interviewing">Interviewing</option>
+                  <option value="Offer">Offer</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              } @else {
+                <!-- Modo normal: Badge clickeable -->
+                <span 
+                  [class]="getStatusClass(job.status)" 
+                  (click)="startEditingStatus(job.id!)"
+                  class="status-badge-clickable">
+                  {{ job.status }}
+                  <i class="edit-icon">✏️</i>
+                </span>
+              }
+            </td>
+            <td>{{ job.applied_date }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

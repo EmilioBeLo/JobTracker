@@ -1,0 +1,67 @@
+@if (isVisible) {
+  <!-- Overlay oscuro de fondo -->
+  <div class="add-form-overlay" (click)="onOverlayClick()"></div>
+  
+  <!-- Contenedor del formulario -->
+  <div class="add-form-container" (click)="onFormClick($event)">
+    <h3>Añadir Nueva Oferta</h3>
+    
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Empresa *</label>
+        <input 
+          type="text" 
+          [(ngModel)]="newJob.company" 
+          name="company" 
+          placeholder="Ej: Google" 
+          required>
+      </div>
+
+      <div class="form-group">
+        <label>Puesto *</label>
+        <input 
+          type="text" 
+          [(ngModel)]="newJob.position" 
+          name="position" 
+          placeholder="Ej: Frontend Developer" 
+          required>
+      </div>
+
+      <div class="form-group">
+        <label>Estado</label>
+        <select [(ngModel)]="newJob.status" name="status">
+          <option value="Applied">Applied</option>
+          <option value="Interviewing">Interviewing</option>
+          <option value="Offer">Offer</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Fecha de Aplicación</label>
+        <input 
+          type="date" 
+          [(ngModel)]="newJob.applied_date" 
+          name="applied_date">
+      </div>
+
+      <div class="form-group">
+        <label>Notas</label>
+        <textarea 
+          [(ngModel)]="newJob.notes" 
+          name="notes" 
+          rows="3"
+          placeholder="Notas adicionales..."></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="onClose()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-submit">
+          Añadir Oferta
+        </button>
+      </div>
+    </form>
+  </div>
+}

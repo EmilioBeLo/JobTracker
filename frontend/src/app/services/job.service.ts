@@ -21,7 +21,7 @@ export interface Job {
 export class JobService {
   private http = inject(HttpClient);
 
-  private apiUrl = "http://localhost/dwec/Angular/JobTracker/backend/jobs.php";
+  private apiUrl = "http://localhost/dwec/Angular/JobTracker/backend/jobs.php"; // Adjust path if needed
 
 
   getJobs(userId: number): Observable<Job[]> {

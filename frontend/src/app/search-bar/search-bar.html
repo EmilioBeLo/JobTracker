@@ -1,0 +1,16 @@
+<div class="search-bar">
+  <div class="search-input-wrapper">
+    <i class="bi bi-search search-icon"></i>
+    <input 
+      type="text" 
+      [value]="searchTerm"
+      (input)="onSearchChange($any($event.target).value)"
+      placeholder="Buscar por empresa o puesto..."
+      class="search-input">
+    @if (searchTerm) {
+      <button (click)="onClear()" class="clear-btn" title="Limpiar búsqueda">
+        <i class="bi bi-x-circle-fill"></i>
+      </button>
+    }
+  </div>
+</div>

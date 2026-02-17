@@ -1,0 +1,114 @@
+.jobs-table {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.jobs-table h3 {
+  margin: 0 0 1.5rem 0;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.no-jobs {
+  text-align: center;
+  padding: 3rem;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+thead {
+  background: #f8f9fa;
+}
+
+th {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+  font-weight: 600;
+  color: #555;
+}
+
+td {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr {
+  transition: background 0.2s;
+}
+
+tbody tr:hover {
+  background: #f8f9ff;
+}
+
+/* Badges de estado */
+.status-badge-clickable {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.status-badge-clickable:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.edit-icon {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.status-applied { 
+  background: #3498db;
+}
+
+.status-interviewing { 
+  background: #f39c12;
+}
+
+.status-offer { 
+  background: #27ae60;
+}
+
+.status-rejected { 
+  background: #e74c3c;
+}
+
+/* Select para edición inline */
+.status-select-open {
+  padding: 0.5rem;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.status-select-open:focus {
+  outline: none;
+  border-color: #764ba2;
+}
+
+.status-select-open option {
+  padding: 0.5rem;
+}
+
+.status-select-open option:hover {
+  background: #f0f0f0;
+}
