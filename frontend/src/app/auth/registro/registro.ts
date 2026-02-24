@@ -19,7 +19,42 @@ export class RegistroComponent {
     };
     errorMessage: string = '';
 
+    passwordStrength: number = 0;
+    strengthLabel: string = '';
+    strengthColor: string = 'danger';
+    strengthPercent: number = 0;
+
+    get isPasswordStrongEnough(): boolean {
+        return this.passwordStrength >= 3;
+    }
+
     constructor(private authService: AuthService, private router: Router) { }
+
+    evaluatePasswordStrength(password: string): void {
+        let score = 0;
+
+        if (password.length >= 8) score++;
+        if (/[a-z]/.test(password)) score++;
+        if (/[A-Z]/.test(password)) score++;
+        if (/[0-9]/.test(password)) score++;
+        if (/[^a-zA-Z0-9]/.test(password)) score++;
+
+        this.passwordStrength = score;
+
+        const levels: { label: string; color: string; percent: number }[] = [
+            { label: 'Muy débil', color: 'danger', percent: 10 },
+            { label: 'Muy débil', color: 'danger', percent: 20 },
+            { label: 'Débil', color: 'warning', percent: 40 },
+            { label: 'Media', color: 'info', percent: 60 },
+            { label: 'Fuerte', color: 'success', percent: 80 },
+            { label: 'Muy fuerte', color: 'success', percent: 100 }
+        ];
+
+        const level = levels[score];
+        this.strengthLabel = level.label;
+        this.strengthColor = level.color;
+        this.strengthPercent = level.percent;
+    }
 
     onSubmit() {
         this.authService.register(this.user).subscribe({

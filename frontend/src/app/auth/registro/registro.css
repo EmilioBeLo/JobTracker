@@ -146,7 +146,12 @@
 
 .password-strength .progress-bar {
     border-radius: 10px;
-    transition: width 0.3s ease;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-text {
+    transition: color 0.3s ease;
+    font-weight: 600;
 }
 
 /* Checkbox personalizado */
